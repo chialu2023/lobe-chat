@@ -6,7 +6,7 @@
 -- 1. agents: title, description, slug, tags(jsonb), system_role, user_id
 DROP INDEX IF EXISTS agents_bm25_idx;--> statement-breakpoint
 CREATE INDEX agents_bm25_idx ON agents
-USING bm25 (id, title, description, slug, tags, system_role, user_id)
+USING to_tsvector (id, title, description, slug, tags, system_role, user_id)
 WITH (
   key_field = 'id',
   text_fields = '{
@@ -24,7 +24,7 @@ WITH (
 -- 2. topics: title, content, description, user_id
 DROP INDEX IF EXISTS topics_bm25_idx;--> statement-breakpoint
 CREATE INDEX topics_bm25_idx ON topics
-USING bm25 (id, title, content, description, user_id)
+USING to_tsvector  (id, title, content, description, user_id)
 WITH (
   key_field = 'id',
   text_fields = '{
@@ -38,7 +38,7 @@ WITH (
 -- 3. files: name, user_id, file_type
 DROP INDEX IF EXISTS files_bm25_idx;--> statement-breakpoint
 CREATE INDEX files_bm25_idx ON files
-USING bm25 (id, name, user_id, file_type)
+USING to_tsvector (id, name, user_id, file_type)
 WITH (
   key_field = 'id',
   text_fields = '{
@@ -51,7 +51,7 @@ WITH (
 -- 4. knowledge_bases: name, description, user_id
 DROP INDEX IF EXISTS knowledge_bases_bm25_idx;--> statement-breakpoint
 CREATE INDEX knowledge_bases_bm25_idx ON knowledge_bases
-USING bm25 (id, name, description, user_id)
+USING to_tsvector (id, name, description, user_id)
 WITH (
   key_field = 'id',
   text_fields = '{
